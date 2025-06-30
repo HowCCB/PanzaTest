@@ -1,0 +1,32 @@
+{
+  "name": "paperpanza-main",
+  "version": "1.0.0",
+  "description": "PaperPanza - Your AI Research Sidekick",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Static site, no build needed'",
+    "start": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "AI",
+    "research",
+    "academic",
+    "literature",
+    "companion"
+  ],
+  "author": "PaperPanza Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/paperpanza.git"
+  },
+  "homepage": "https://paperpanza.vercel.app",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  }
+}
