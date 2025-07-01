@@ -585,7 +585,14 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// === Waiting List Email Submission to Vercel Serverless API (Supabase) ===
+// === Supabase 全局变量方式 ===
+// 请确保 index.html 中已添加：
+// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+const supabaseUrl = 'https://ufuodqokhbcjihqcejzj.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmdW9kcW9raGJjamlocWNlanpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyOTkyODEsImV4cCI6MjA2Njg3NTI4MX0.iXhXpryzYnkYThsSGvq9UHr5BIUz8Udic48Q9mwY1bU';
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
 document.addEventListener('DOMContentLoaded', function () {
   const emailInput = document.querySelector('.waitlist-form input[type="email"]');
   const submitBtn = document.querySelector('.waitlist-form .submit-btn');
@@ -598,17 +605,14 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
       try {
-        const res = await fetch('/api/waiting-list', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
-        });
-        const data = await res.json();
-        if (data.success) {
+        const { data, error } = await supabase
+          .from('waiting_list')
+          .insert([{ email }]);
+        if (!error) {
           alert('提交成功！');
           emailInput.value = '';
         } else {
-          alert(data.error || '提交失败');
+          alert(error.message || '提交失败');
         }
       } catch {
         alert('网络错误');
